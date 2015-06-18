@@ -20,14 +20,15 @@
   }
   var cnt = 1;
   var echo_service;
-  window.onload = function(){
+
+  function websocketConnect(){
     echo_service = new WebSocket('ws://localhost:8080', "echo-protocol");
     echo_service.onmessage = function(event){
       append("messaggio ricevuto"+event.data)
       //echo_service.close();
       res = JSON.parse( event.data );
       append("Valore "+res);
-    } 
+    }
     echo_service.onopen = function(){
       append("connessione effettuata")
       cnt++;
@@ -35,17 +36,24 @@
       //var j = JSON.stringify([new Number(1)+cnt, new String('false'), new Boolean(false)]);
       var j = JSON.stringify(req);
       // echo_service.send(j);
-    } 
+    }
     echo_service.onclose = function(){
       append("connessione chiusa");
-    } 
+    }
     echo_service.onerror = function(){
       append("errore nella connessione");
     }
   }
 
+  window.onload = websocketConnect()
+
 
   $(document).ready(function() {
+
+    $('#reconnbt').click(
+            function () {
+              websocketConnect()
+            });
 
     $('#sendbt').click(
             function () {
@@ -72,13 +80,15 @@
     <div class="col-md-4">
       <textarea id="jsonval" cols="30" rows="10">asdasd
       </textarea>
-      <br><button id="sendbt" class="bt-primary">Send</button>
+      <br><button id="reconnbt" class="bt-primary">Reconnect</button> <button id="sendbt" class="bt-primary">Send</button>
     </div>
     <div class="col-md-4">
 
       <pre>
 {
-"module":"moduloram"
+"module":"moduloram",
+"action":"list",
+"test":"siii"
 }
       </pre>
 

@@ -4,47 +4,72 @@ function JarvisMessage() {
     this.receiver_clients = [] //if empty it's a broadcast message, otherwise the clients interester
     this.sender_client = null
     this.content = null
-
 }
 
 JarvisMessage.prototype.addClient = function(c) {
     this.receiver_clients.push(c)
 };
 
+JarvisMessage.prototype.reply = function() {
+    m = new JarvisMessage();
+    m.receiver_clients.push( this.sender );
+    return m
+};
+
+JarvisMessage.prototype.replyError = function( err ) {
+    m = this.reply();
+    m.content.error = true;
+    m.content.error_type = err;
+    return m;
+};
+
+JarvisMessage.prototype.stringify = function() {
+
+    return JSON.stringify(this.content);
+};
+
 JarvisMessage.prototype.parseBuff = function(c) {
 
-    console.log("prima")
     try {
-        JSON.parse(c)
+        this.content = JSON.parse(c)
     } catch (e) {
         return false;
     }
-    console.log("dopo")
-    this.content = JSON.parse(c)
     return true;
 };
 
 JarvisMessage.prototype.dispatch = function() {
-    /*if module == core....*/
-    moduleManager.dispatchMessage(this)
+     moduleManager.dispatchMessage(this)
 };
 
 
 
-function Client( connection ) {
+function Client( conn ) {
     this.id = 0;
-    this.connection = connection;
-    connection.on('message', this.handleClientMessage);
+    this.conn = conn;
+    //conn.on('message', this.handleClientMessage);
+    conn.on('message',
+        function( data ) {
+            console.log(this.conn)
+        });
+
+        //message.dispatch();
 
 }
 
 Client.prototype.handleClientMessage = function( data ) {
-    message = new JarvisMessage();
-    message.sender = this
-    if ( message.parseBuff(data.utf8Data) )
+   // message = new JarvisMessage();
+   // message.sender = this
+    console.log(this.conn)
+   // if ( !message.parseBuff(data.utf8Data) )
     {
-        message.dispatch();
+
+        //message.utf8Data
+//        this.connection.sendUTF( message.replyError(1).stringify() );
+   //     return;
     }
+
+    //message.dispatch();
 }
 
 
@@ -52,9 +77,10 @@ Client.prototype.handleClientMessage = function( data ) {
 
 var clientList = [];
 
-exports.createClient = function (connection) {
-    c = new Client( connection );
+exports.createClient = function (conn) {
+    c = new Client( conn );
     c.id = clientList.push(c);
+    console.log(c.conn)
 };
 
 exports.getClient = function (c) {
