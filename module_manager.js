@@ -23,21 +23,49 @@ Module.prototype.receivedMessage = function(message) {
 };
 
 Module.prototype.handleMessage = function(message) {
-    console.log("handleMessage "+this.name);
+
+    if (message.content.action)
+    {
+        fn = message.content.action.charAt(0).toUpperCase() + message.content.action.slice(1)
+        if( typeof this["on"+fn] === 'function' )
+        {
+            this["on"+fn](message);
+            return;
+        }
+    }
+
+    //console.log("handleMessage "+this.name);
     this.emit('message', message);
     return this.name;
 };
 
+/*
+ function ModuleRam (n)
+ {
+ Module.call(this, n);
+ }
+ ModuleRam.prototype = Object.create( Module.prototype );
+ ModuleRam.prototype.__proto__ = Module.prototype;
+ ModuleRam.prototype.receivedMessage = function(message) {
+ console.log("ModuleRam receivedMessage "+this.name);
+ return this.name;
+ };
+ */
 
 function ModuleRam (n)
 {
     Module.call(this, n);
 }
-ModuleRam.prototype = Object.create( Module.prototype );
-ModuleRam.prototype.__proto__ = Module.prototype;
+
+util.inherits(ModuleRam, Module);
+
+
 ModuleRam.prototype.receivedMessage = function(message) {
     console.log("ModuleRam receivedMessage "+this.name);
     return this.name;
+};
+ModuleRam.prototype.onList = function(message) {
+    console.log("onlist"+message.content.test);
 };
 
 

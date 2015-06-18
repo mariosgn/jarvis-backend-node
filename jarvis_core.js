@@ -7,7 +7,7 @@ moduleManager.init();
 
 var clientManager = require('./client_manager');
 
-var server = http.createServer(function(request, response) {
+var server = http.createServer( function(request, response) {
     console.log((new Date()) + ' ------------- Received request for ' + request.url);
     response.writeHead(404);
     response.end();
@@ -29,31 +29,6 @@ wsServer = new WebSocketServer({
 
 
 wsServer.on('request', function(request) {
-
-
     var connection = request.accept('echo-protocol', request.origin);
     clientManager.createClient(connection);
-
-    connection.on('message', function(message) {
-        if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
-
-            //mm.use(1, 2);
-
-            //res = JSON.parse(message.utf8Data);
-
-            //connection.sendUTF(message.utf8Data);
-
-           /* setInterval(function() {
-                connection.sendUTF(message.utf8Data);
-            }, 1000);*/
-        }
-        else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            connection.sendBytes(message.binaryData);
-        }
-    });
-    /*connection.on('close', function(reasonCode, description) {
-        console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
-    });*/
 });
