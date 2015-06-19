@@ -39,19 +39,6 @@ Module.prototype.handleMessage = function(message) {
     return this.name;
 };
 
-/*
- function ModuleRam (n)
- {
- Module.call(this, n);
- }
- ModuleRam.prototype = Object.create( Module.prototype );
- ModuleRam.prototype.__proto__ = Module.prototype;
- ModuleRam.prototype.receivedMessage = function(message) {
- console.log("ModuleRam receivedMessage "+this.name);
- return this.name;
- };
- */
-
 function ModuleRam (n)
 {
     Module.call(this, n);
@@ -64,8 +51,14 @@ ModuleRam.prototype.receivedMessage = function(message) {
     console.log("ModuleRam receivedMessage "+this.name);
     return this.name;
 };
-ModuleRam.prototype.onList = function(message) {
-    console.log("onlist"+message.content.test);
+ModuleRam.prototype.onListactive = function(message) {
+    console.log("qadasdas")
+    r = message.reply();
+    r.content.modules = []
+    for (var i = 0, l = modules.length; i < l; i++) {
+        r.content.modules.push( modules[i].name)
+    }
+    r.send();
 };
 
 
