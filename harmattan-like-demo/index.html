@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+<head>
+    <title>Jarvis demo</title>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+    <style>
+        /*standard browser*/
+        .container
+        {
+            width: 250px;
+            height: 546px;
+            left: 100px;
+            top: 100px;
+            position: absolute;
+        }
+        body
+        {
+            background-color: #1d1d1d;
+        }
+
+
+        body
+        {
+            font-family: 'Droid Sans', sans-serif;
+            color: #666666;
+        }
+        .container
+        {
+            /*border: 1px solid #8d8d8d;*/
+            background-color: #8e8e8e;
+            padding: 3px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        .row
+        {
+            clear: both;
+            background-color: #f5f5f5;
+            border: 1px solid #696969;
+            margin-bottom: 4px;
+        }
+
+        .time {
+            text-align: center;
+            font-size: 36px;
+            padding:6px;
+            letter-spacing: 4px;
+        }
+        .clock {
+            text-align: center;
+            font-size: 16px;
+            color: #96918e;
+            padding-bottom: 4px;
+        }
+
+        .weath
+        {
+            padding-top: 8px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #cecece;
+        }
+        .weath_temp {
+            text-align: center;
+            font-size: 60px;
+            color: #666666;
+            margin-left: 20px;
+            margin-top: 0px;
+            float: left;
+        }
+        .weath_info {
+            float: right;
+            text-align: right;
+        }
+        .weath_info p {
+            font-size: 12px;
+            margin: 6px 8px;
+            color: #96918e;
+        }
+        .weath_info img {
+            margin-bottom: -3px;
+            margin-left: 10px;
+        }
+        .weath_details {
+            clear: both;
+            margin-left: 20px;
+        }
+        .weath_forecast
+        {
+            height: 114px;
+        }
+        .weath_forecast:first-child {
+            border-left: 0px;
+        }
+        .weath_forecast div
+        {
+            text-align: center;
+            width: 32%;
+            float: left;
+            border-left: 1px solid #cecece;
+            margin-top: 10px;
+        }
+        .weath_forecast p
+        {
+            font-size: 10px;
+            margin: 2px;
+            margin-bottom: 4px;
+        }
+
+        .cpu_infotable {
+            font-size: 13px;
+            margin: 10px;
+        }
+        #progressbar {
+            border: 1px solid #888888;
+            background-color: #f5f5f5;
+            border-radius: 2px;
+            padding: 0px;
+        }
+        #progressbar > div {
+            background-color: #888888;
+            width: 50%;
+            height: 5px;
+            border-radius: 1px;
+        }
+        #progressbar_1 {
+            border: 1px solid #888888;
+            background-color: #f5f5f5;
+            border-radius: 2px;
+            padding: 0px;
+        }
+        #progressbar_1 > div {
+            background-color: #888888;
+            width: 20%;
+            height: 5px;
+            border-radius: 1px;
+        }
+
+
+        .process_info
+        {
+            height: 140px;
+        }
+        .process_infoheader{
+            clear: both;
+            margin: 8px 0px;
+            padding: 0px 8px;
+        }
+        .process_infoheader div{
+            float: left;
+            width: 33%;
+            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+            padding-bottom: 3px;
+        }
+        .process_infoheader div:nth-of-type(2) {
+            text-align: center;
+        }
+        .process_infoheader div:nth-of-type(3) {
+            text-align: right;
+        }
+
+        .process_info_row{
+            clear: both;
+            margin: 0px;
+            padding: 0px 8px;
+        }
+        .process_info_row div{
+            float: left;
+            width: 33%;
+            text-align: left;
+            font-size: 14px;
+            font-weight: normal;
+            padding-bottom: 3px;
+        }
+        .process_info_row div:nth-of-type(2) {
+            text-align: center;
+        }
+        .process_info_row div:nth-of-type(3) {
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <div id="dtime" class="time"></div>
+        <div id="ddate" class="clock"></div>
+    </div>
+
+    <div class="row">
+        <div class="weath">
+            <div class="weath_temp">7&deg;</div>
+            <div class="weath_info">
+                <p>982.05 mb <img src="images/pressure.png"> </p>
+                <p>61 % <img src="images/humidity.png"></p>
+                <p>32.19 km/h <img src="images/wind-2.png"></p>
+            </div>
+            <div class="weath_details">Partly cloudy</div>
+        </div>
+
+        <div class="weath_forecast">
+            <div>
+                <p>MON</p>
+                <p><img src="images/1.png"></p>
+                <p>4&deg;/8&deg;</p>
+            </div>
+            <div>
+                <p>TUE</p>
+                <p><img src="images/1.png"></p>
+                <p>4&deg;/8&deg;</p>
+            </div>
+            <div>
+                <p>WED</p>
+                <p><img src="images/1.png"></p>
+                <p>4&deg;/8&deg;</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <table width="90%" class="cpu_infotable">
+            <tr>
+                <td width="33%">Cpu:</td>
+                <td width="33%">
+                    <div id="progressbar">
+                        <div></div>
+                    </div>
+                </td>
+                <td width="33%" align="right">21%</td>
+            </tr>
+
+            <tr>
+                <td>Mem:</td>
+                <td>
+                    <div id="progressbar_1">
+                        <div></div>
+                    </div>
+                </td>
+                <td align="right">50%</td>
+            </tr>
+
+            <tr>
+                <td >Uptime:</td>
+                <td></td>
+                <td align="right">5h 44m</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="row">
+        <div class="process_info">
+            <div class="process_infoheader">
+                <div>Proc:</div>
+                <div>Mem%</div>
+                <div>Mem</div>
+            </div>
+
+            <div class="process_info_row">
+                <div>Gimp-28</div>
+                <div>21.43%</div>
+                <div>600M</div>
+            </div>
+            <div class="process_info_row">
+                <div>cinammon</div>
+                <div>20.34%</div>
+                <div>600M</div>
+            </div>
+            <div class="process_info_row">
+                <div>chrome</div>
+                <div>6.87%</div>
+                <div>600M</div>
+            </div>
+            <div class="process_info_row">
+                <div>dropbox</div>
+                <div>3.34%</div>
+                <div>600M</div>
+            </div>
+            <div class="process_info_row">
+                <div>nautilus</div>
+                <div>1.23%</div>
+                <div>600M</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+</body>
+</html>
+<script src="jquery-1.10.2.min.js"></script>
+<script>
+    var jarvisWs;
+    var jarvisStatus;
+
+    function websocketConnect(fn) {
+        jarvisWs = new WebSocket('ws://localhost:8080', "jarvis-protocol");
+
+        jarvisWs.onmessage = function (event) {
+            m = JSON.parse(event.data);
+            jarvisHandleMessage(m);
+        }
+        jarvisWs.onopen = function () {
+            jarvisStatus = true;
+            jarvisStart();
+        }
+        jarvisWs.onclose = function () {
+            jarvisStatus = false;
+        }
+        jarvisWs.onerror = function () {
+
+        }
+    }
+
+    window.onload = websocketConnect()
+
+
+    var clockTimer;
+    function jarvisStart() {
+        clockTimer = setInterval( function() {
+
+            jarvisSendObj( { "module":"core", "action":"gettime"} )
+
+        }, 1000);
+    }
+
+
+    function jarvisSendObj(o)
+    {
+        jarvisWs.send(JSON.stringify(o, null, 4));
+    }
+
+    function jarvisHandleMessage(m)
+    {
+        if (m.module=="core")
+        {
+            if (m.action=="gettime")
+            {
+                //alert(m.time);
+                d = new Date( m.time );
+                hh = ("0"+d.getHours()).slice(-2);
+                mm = ("0"+d.getMinutes()).slice(-2);
+                ss = ("0"+d.getSeconds()).slice(-2);
+
+                $("#dtime").text( hh+" : "+mm+"."+ss );
+                $("#ddate").text( d.toDateString() );
+
+            }
+        }
+    }
+</script>
