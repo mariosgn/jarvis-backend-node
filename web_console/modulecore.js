@@ -16,3 +16,12 @@ function modulecore_ping()
     };
     setAndSend(o)
 }
+
+function modulecore_gettime()
+{
+    o = {
+        "module": "core",
+        "action": "gettime"
+    };
+    setAndSend(o)
+}
