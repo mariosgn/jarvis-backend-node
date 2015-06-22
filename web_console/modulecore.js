@@ -25,3 +25,12 @@ function modulecore_gettime()
     };
     setAndSend(o)
 }
+
+function modulecore_getactions()
+{
+    o = {
+        "module": "core",
+        "action": "getactions"
+    };
+    setAndSend(o)
+}
