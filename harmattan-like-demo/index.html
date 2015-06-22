@@ -8,7 +8,6 @@
         .container
         {
             width: 250px;
-            height: 546px;
             left: 100px;
             top: 100px;
             position: absolute;
@@ -106,31 +105,45 @@
             margin-bottom: 4px;
         }
 
-        .cpu_infotable {
+
+        .system_info
+        {
             font-size: 13px;
             margin: 10px;
+            overflow: hidden;
         }
-        #progressbar {
+
+        .system_info_row{
+            clear: both;
+            margin: 0px;
+            padding: 0px 8px;
+        }
+        .system_info_row > div{
+            float: left;
+            width: 33%;
+            text-align: left;
+            font-weight: normal;
+            padding-bottom: 3px;
+        }
+        .system_info_row div:nth-of-type(2) {
+            text-align: center;
+        }
+        .system_info_row div:nth-of-type(3) {
+            text-align: right;
+        }
+
+        .progressbar {
             border: 1px solid #888888;
             background-color: #f5f5f5;
             border-radius: 2px;
-            padding: 0px;
+            padding: 0px 0px;
+            margin-top: 5px;
+            width: 100%;
         }
-        #progressbar > div {
+        .progressbar_bar {
             background-color: #888888;
             width: 50%;
-            height: 5px;
-            border-radius: 1px;
-        }
-        #progressbar_1 {
-            border: 1px solid #888888;
-            background-color: #f5f5f5;
-            border-radius: 2px;
-            padding: 0px;
-        }
-        #progressbar_1 > div {
-            background-color: #888888;
-            width: 20%;
+            padding: 0px 0px ;
             height: 5px;
             border-radius: 1px;
         }
@@ -222,33 +235,26 @@
     </div>
 
     <div class="row">
-        <table width="90%" class="cpu_infotable">
-            <tr>
-                <td width="33%">Cpu:</td>
-                <td width="33%">
-                    <div id="progressbar">
-                        <div></div>
-                    </div>
-                </td>
-                <td width="33%" align="right">21%</td>
-            </tr>
+        <div class="system_info">
 
-            <tr>
-                <td>Mem:</td>
-                <td>
-                    <div id="progressbar_1">
-                        <div></div>
-                    </div>
-                </td>
-                <td align="right">50%</td>
-            </tr>
+            <div id="system_info_cpus">
+             </div>
 
-            <tr>
-                <td >Uptime:</td>
-                <td></td>
-                <td align="right">5h 44m</td>
-            </tr>
-        </table>
+            <div class="system_info_row">
+                <div>Mem:</div>
+                <div>
+                    <div class="progressbar">
+                        <div class="progressbar_bar"></div>
+                    </div>
+                </div>
+                <div>50%</div>
+            </div>
+            <div class="system_info_row">
+                <div>Uptime:</div>
+                <div></div>
+                <div>5h 44m</div>
+            </div>
+        </div>
     </div>
 
 
@@ -323,6 +329,7 @@
 
     var clockTimer;
     function jarvisStart() {
+        jarvisSendObj( { "module":"os", "action":"cpuinfo"} )
         clockTimer = setInterval( function() {
 
             jarvisSendObj( { "module":"core", "action":"gettime"} )
@@ -346,11 +353,27 @@
                 d = new Date( m.time );
                 hh = ("0"+d.getHours()).slice(-2);
                 mm = ("0"+d.getMinutes()).slice(-2);
-                ss = ("0"+d.getSeconds()).slice(-2);
 
-                $("#dtime").text( hh+" : "+mm+"."+ss );
+                $("#dtime").text( hh+" : "+mm );
                 $("#ddate").text( d.toDateString() );
 
+            }
+        }
+        else if (m.module=="os")
+        {
+            if (m.action=="cpuinfo")
+            {
+                for (var i = 0; i < m.cpus.length; i++) {
+                   n = i+1;
+                   var cpu = $('<div  class="system_info_row"><div>Cpu '+ n +'</div>\
+                            <div>\
+                            <div class="progressbar">\
+                            <div class="progressbar_bar"></div>\
+                            </div>\
+                            </div>\
+                            <div>21%</div></div>');
+                   $('#system_info_cpus').append(cpu);
+                }
             }
         }
     }

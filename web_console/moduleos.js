@@ -53,3 +53,12 @@ function moduleos_cpuinfo()
     };
     setAndSend(o)
 }
+
+function moduleos_getactions()
+{
+    o = {
+        "module": "os",
+        "action": "getactions"
+    };
+    setAndSend(o)
+}

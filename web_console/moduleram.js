@@ -45,3 +45,12 @@ function moduleram_setperiod()
     };
     setAndSend(o)
 }
+
+function moduleram_getactions()
+{
+    o = {
+        "module": "ram",
+        "action": "getactions"
+    };
+    setAndSend(o)
+}
