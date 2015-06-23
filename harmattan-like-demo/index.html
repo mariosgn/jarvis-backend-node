@@ -50,13 +50,15 @@
             padding-bottom: 4px;
         }
 
-        .weath {
+
+
+        .forecast {
             padding-top: 8px;
             padding-bottom: 10px;
             border-bottom: 1px solid #cecece;
         }
 
-        .weath_temp {
+        .forecast_temp {
             text-align: center;
             font-size: 60px;
             color: #666666;
@@ -65,36 +67,44 @@
             float: left;
         }
 
-        .weath_info {
+        .forecast_timezone {
+            text-align: left;
+            font-size: 14px;
+            color: #666666;
+            margin-left: 20px;
+            margin-top: 0px;
+        }
+
+        .forecast_info {
             float: right;
             text-align: right;
         }
 
-        .weath_info p {
+        .forecast_info p {
             font-size: 12px;
             margin: 6px 8px;
             color: #96918e;
         }
 
-        .weath_info img {
+        .forecast_info img {
             margin-bottom: -3px;
             margin-left: 10px;
         }
 
-        .weath_details {
+        .forecast_details {
             clear: both;
             margin-left: 20px;
         }
 
-        .weath_forecast {
+        .forecast_forecast {
             height: 114px;
         }
 
-        .weath_forecast:first-child {
+        .forecast_forecast:first-child {
             border-left: 0px;
         }
 
-        .weath_forecast div {
+        .forecast_forecast div {
             text-align: center;
             width: 32%;
             float: left;
@@ -102,7 +112,7 @@
             margin-top: 10px;
         }
 
-        .weath_forecast p {
+        .forecast_forecast p {
             font-size: 10px;
             margin: 2px;
             margin-bottom: 4px;
@@ -214,50 +224,43 @@
 
 <div class="container">
 
-    <div class="row">
+    <div class="row" id="time_row">
         <div id="dtime" class="time"></div>
         <div id="ddate" class="clock"></div>
     </div>
 
-    <div class="row">
-        <div class="weath">
-            <div class="weath_temp">7&deg;</div>
-            <div class="weath_info">
-                <p>982.05 mb <img src="images/pressure.png"></p>
-
-                <p>61 % <img src="images/humidity.png"></p>
-
-                <p>32.19 km/h <img src="images/wind-2.png"></p>
+    <div class="row" id="forecast_row" >
+        <div class="forecast">
+            <div id="forecast_timezone" class="forecast_timezone"></div>
+            <div id="forecast_temp" class="forecast_temp"></div>
+            <div class="forecast_info">
+                <p><span id="forecast_pressure"></span> mb <img src="images/pressure.png"></p>
+                <p><span id="forecast_hum"></span> % <img src="images/humidity.png"></p>
+                <p><span id="forecast_wind"></span> km/h <img src="images/wind-2.png"></p>
             </div>
-            <div class="weath_details">Partly cloudy</div>
+            <div id="forecast_summary" class="forecast_details"></div>
         </div>
 
-        <div class="weath_forecast">
+        <div class="forecast_forecast">
             <div>
-                <p>MON</p>
-
-                <p><img src="images/1.png"></p>
-
-                <p>4&deg;/8&deg;</p>
+                <p id="forecast_day_1_name"></p>
+                <p><img id="forecast_day_1_img" src=""></p>
+                <p id="forecast_day_1_temp"></p>
             </div>
             <div>
-                <p>TUE</p>
-
-                <p><img src="images/1.png"></p>
-
-                <p>4&deg;/8&deg;</p>
+                <p id="forecast_day_2_name"></p>
+                <p><img id="forecast_day_2_img" src=""></p>
+                <p id="forecast_day_2_temp"></p>
             </div>
             <div>
-                <p>WED</p>
-
-                <p><img src="images/1.png"></p>
-
-                <p>4&deg;/8&deg;</p>
+                <p id="forecast_day_3_name"></p>
+                <p><img id="forecast_day_3_img" src=""></p>
+                <p id="forecast_day_3_temp"></p>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="system_row">
         <div class="system_info">
 
             <div id="system_info_cpus">
@@ -323,115 +326,4 @@
 </body>
 </html>
 <script src="jquery-1.10.2.min.js"></script>
-<script>
-    var jarvisWs;
-    var jarvisStatus;
-
-    function websocketConnect(fn) {
-        jarvisWs = new WebSocket('ws://localhost:8080', "jarvis-protocol");
-
-        jarvisWs.onmessage = function (event) {
-            m = JSON.parse(event.data);
-            jarvisHandleMessage(m);
-        }
-        jarvisWs.onopen = function () {
-            jarvisStatus = true;
-            jarvisStart();
-        }
-        jarvisWs.onclose = function () {
-            jarvisStatus = false;
-        }
-        jarvisWs.onerror = function () {
-
-        }
-    }
-
-    window.onload = websocketConnect()
-
-
-    var clockTimer;
-    function jarvisStart() {
-        jarvisSendObj({"module": "os", "action": "cpuinfo"});
-        jarvisSendObj({"module": "os", "action": "listen"});
-        jarvisSendObj({"module": "os", "action": "setperiod", "period": 2000});
-        clockTimer = setInterval(function () {
-
-            jarvisSendObj({"module": "core", "action": "gettime"});
-
-        }, 1000);
-    }
-
-
-    function jarvisSendObj(o) {
-        jarvisWs.send(JSON.stringify(o, null, 4));
-    }
-
-    function jarvisHandleMessage(m) {
-        if (m.module == "core") {
-            if (m.action == "gettime") {
-                //alert(m.time);
-                d = new Date(m.time);
-                hh = ("0" + d.getHours()).slice(-2);
-                mm = ("0" + d.getMinutes()).slice(-2);
-
-                $("#dtime").text(hh + " : " + mm);
-                $("#ddate").text(d.toDateString());
-
-            }
-        }
-        else if (m.module == "os") {
-            if (m.action == "cpuinfo") {
-                for (var i = 0; i < m.cpus.length; i++) {
-                    n = i + 1;
-                    var cpu = $('<div  class="system_info_row"><div>Cpu ' + n + '</div>\
-                            <div>\
-                            <div class="progressbar">\
-                            <div id="cpu_progress_' + n + '" class="progressbar_bar"></div>\
-                            </div>\
-                            </div>\
-                            <div id="cpu_progress_text_' + n + '"></div></div>');
-                    $('#system_info_cpus').append(cpu);
-                }
-            }
-            else if (m.action == "cpustats") {
-                $('#memory_usage').width("" + m.freemem + "%");
-                $('#memory_usage_text').html(m.freemem);
-                for (var i = 1; i < m.cpus.length; i++) {
-                    $('#cpu_progress_' + i).width("" + m.cpus[i] + "%");
-                    $('#cpu_progress_text_' + i).html("" + m.cpus[i] + "%");
-                }
-
-                function toHHMMSS(sec) {
-
-                    var hours = Math.floor(sec / 3600);
-                    var minutes = Math.floor((sec - (hours * 3600)) / 60);
-                    var seconds = sec - (hours * 3600) - (minutes * 60);
-                    var days = 0;
-
-                    if ( hours>24 ) {
-                        rhours = hours%24;
-                        days = (hours-rhours) /24;
-                        hours = rhours;
-                    }
-
-                    if (minutes < 10) {
-                        minutes = "0" + minutes;
-                    }
-                    if (seconds < 10) {
-                        seconds = "0" + seconds;
-                    }
-                    var time = hours + 'h ' + minutes + ':' + seconds;
-                    if (days>0) {
-                        time = days+"d "+time;
-                    }
-                    return time;
-                }
-
-                $('#os_uptime').html(toHHMMSS(m.uptime));
-
-
-            }
-
-        }
-    }
-</script>
+<script src="demo.js"></script>
