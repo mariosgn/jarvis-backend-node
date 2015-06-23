@@ -78,8 +78,8 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#core" aria-controls="Core" role="tab" data-toggle="tab">Core</a></li>
                     <li role="presentation"><a href="#os" aria-controls="os" role="tab" data-toggle="tab">Os</a></li>
-                    <li role="presentation"><a href="#ram" aria-controls="profile" role="tab" data-toggle="tab">Ram</a></li>
                     <li role="presentation"><a href="#disk" aria-controls="messages" role="tab" data-toggle="tab">Disk</a></li>
+                    <li role="presentation"><a href="#forecast" aria-controls="profile" role="tab" data-toggle="tab">Forecast</a></li>
                     <li role="presentation"><a href="#util" aria-controls="util" role="tab" data-toggle="tab">Utils</a></li>
                 </ul>
 
@@ -105,15 +105,16 @@
                             <li><a href="#" class="jarvisaction" action="cpuinfo">Cpu Info</a></li>
                         </ul>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="ram">
-                        <strong>Ram actions:</strong>
-                        <ul module="ram" >
+                    <div role="tabpanel" class="tab-pane" id="forecast">
+                        <strong>Forecast actions:</strong>
+                        <ul module="forecast" >
                             <li><a href="#" class="jarvisaction" action="ping">Ping</a></li>
                             <li><a href="#" class="jarvisaction" action="getactions">Get actions</a></li>
-                            <li><a href="#" class="jarvisaction" action="test">Test</a></li>
+                            <li><a href="#" class="jarvisaction" action="setperiod">Set Period</a></li>
                             <li><a href="#" class="jarvisaction" action="listen">Listen</a></li>
                             <li><a href="#" class="jarvisaction" action="unlisten">Unlisten</a></li>
-                            <li><a href="#" class="jarvisaction" action="setperiod">Set Period</a></li>
+                            <li><a href="#" class="jarvisaction" action="getinfo">Get Info</a></li>
+                            <li><a href="#" class="jarvisaction" action="getinfotomorrow">Get Info for tomorrow</a></li>
                         </ul>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="disk">
@@ -186,7 +187,7 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="modulecore.js"></script>
 <script src="moduleutil.js"></script>
-<script src="moduleram.js"></script>
+<script src="moduleforecast.js"></script>
 <script src="moduleos.js"></script>
 
 <script>
