@@ -56,6 +56,10 @@ function jarvisStart() {
     jarvisSendObj({"module": "os", "action": "listen"});
     jarvisSendObj({"module": "os", "action": "setperiod", "period": 2000});
     jarvisSendObj({"module": "forecast", "action": "getinfo", "latitude":"45.4521179", "longitude":"9.1448667"});
+
+    jarvisSendObj({"module": "process", "action": "listen"});
+    jarvisSendObj({"module": "process", "action": "setperiod", "period":1000});
+
     clockTimer = setInterval(function () {
 
         jarvisSendObj({"module": "core", "action": "gettime"});
@@ -174,6 +178,14 @@ function jarvisHandleMessage(m) {
             }
 
             $('#forecast_row').show();
+        }
+    } else if (m.module == "process") {
+        if (m.action == "procstats") {
+            for (var i = 0; i < m.procs.length , i<6; i++) {
+                $('#proc_'+i+' div:nth-child(1)').html( m.procs[i].command );
+                $('#proc_'+i+' div:nth-child(2)').html( m.procs[i].cpu+ "%" );
+                $('#proc_'+i+' div:nth-child(3)').html( m.procs[i].mem+ "M" );
+            }
         }
     }
 }

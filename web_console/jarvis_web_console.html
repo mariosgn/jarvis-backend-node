@@ -80,6 +80,7 @@
                     <li role="presentation"><a href="#os" aria-controls="os" role="tab" data-toggle="tab">Os</a></li>
                     <li role="presentation"><a href="#disk" aria-controls="messages" role="tab" data-toggle="tab">Disk</a></li>
                     <li role="presentation"><a href="#forecast" aria-controls="profile" role="tab" data-toggle="tab">Forecast</a></li>
+                    <li role="presentation"><a href="#process" aria-controls="profile" role="tab" data-toggle="tab">Process</a></li>
                     <li role="presentation"><a href="#util" aria-controls="util" role="tab" data-toggle="tab">Utils</a></li>
                 </ul>
 
@@ -115,6 +116,17 @@
                             <li><a href="#" class="jarvisaction" action="unlisten">Unlisten</a></li>
                             <li><a href="#" class="jarvisaction" action="getinfo">Get Info</a></li>
                             <li><a href="#" class="jarvisaction" action="getinfotomorrow">Get Info for tomorrow</a></li>
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="process">
+                        <strong>Process actions:</strong>
+                        <ul module="process" >
+                            <li><a href="#" class="jarvisaction" action="ping">Ping</a></li>
+                            <li><a href="#" class="jarvisaction" action="getactions">Get actions</a></li>
+                            <li><a href="#" class="jarvisaction" action="setperiod">Set Period</a></li>
+                            <li><a href="#" class="jarvisaction" action="listen">Listen</a></li>
+                            <li><a href="#" class="jarvisaction" action="unlisten">Unlisten</a></li>
+                            <li><a href="#" class="jarvisaction" action="getinfo">Get Info</a></li>
                         </ul>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="disk">
@@ -189,6 +201,7 @@
 <script src="moduleutil.js"></script>
 <script src="moduleforecast.js"></script>
 <script src="moduleos.js"></script>
+<script src="moduleprocess.js"></script>
 
 <script>
     jarvisLog = function (text) {
