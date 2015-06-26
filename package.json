@@ -1,0 +1,41 @@
+{
+  "name": "jarvis-monitor",
+  "description": "System monitor API",
+  "version": "0.1.0",
+  "author": {
+    "name": "Mario Signorino",
+    "email": "mario.signorino@gnufish.net"
+  },
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariosgn/jarvis-backend-node.git"
+  },
+  "homepage": "https://github.com/mariosgn/jarvis-backend-node",
+  "keywords": [
+    "monitor",
+    "widget",
+    "desktop",
+    "rest",
+    "restful",
+    "api"
+  ],
+  "dependencies": {
+    "ws": "~0.7.2",
+    "xdg": "0.1.1",
+    "forecast.io": "0.0.9",
+    "winston": "1.0.0"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "files": [
+    "LICENSE",
+    "Readme.md",
+    "jarvis.js",
+    "lib/"
+  ],
+  "bin": { "jarvis" : "./jarvis.js" }
+
+
+}
