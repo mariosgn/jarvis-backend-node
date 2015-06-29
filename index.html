@@ -300,7 +300,7 @@ ModuleSpotify.prototype.onYeah = function (msg) {
                 caller client. The function takes an optional object that will be jsonized and attached to the message.
             </p>
 <pre>
-ModuleOs.prototype.timerFunction = function () {
+ModuleSpotify.prototype.timerFunction = function () {
     o = {
         "action" : "tictac"
     };
@@ -328,9 +328,21 @@ ModuleOs.prototype.timerFunction = function () {
 "action": "listen"
 }
 </pre>
-        <p>To be finished and improved...</p>
+        <p>All the module will also have some common functions (actions) as:</p>
+        <ul>
+            <li>ping: the caller will get back a pong</li>
+            <li>getactions: the caller will get back a list of all the existing module actions</li>
+        </ul>
+        <p>Finally, if a message is sent to a not-existing action (function OnXxx not implemented) that particular message
+            will be delivered to:
+        </p>
+<pre>
+ModuleSpotify.prototype.receivedMessage = function (message) {
+    console.log("received message");
+};
+</pre>
 
-        <h1>Help</h1>
+                <h1>Help</h1>
         <p>
             For any suggestion or question write to <a href="mailto:mario.signorino@gnufish.net">mario.signorino@gnufish.net</a>.
         </p>
