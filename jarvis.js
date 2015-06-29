@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var moduleManager = require('./lib/module_manager');
 moduleManager.init();
 
